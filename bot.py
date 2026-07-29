@@ -82,4 +82,18 @@ def main():
 
 
 if __name__ == "__main__":
-    main()
+   def main():
+
+    if not BOT_TOKEN:
+        raise ValueError("BOT_TOKEN environment variable is missing.")
+
+    app = Application.builder().token(BOT_TOKEN).build()
+
+    app.add_handler(MessageHandler(filters.Document.ALL, unzip))
+
+    print("Bot Running...")
+
+    app.run_polling(
+        allowed_updates=Update.ALL_TYPES,
+        drop_pending_updates=True
+    )
